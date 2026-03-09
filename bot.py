@@ -153,6 +153,8 @@ async def on_ready():
     init_db()
     print(f"✅ Bot connecté : {bot.user} ({bot.user.id})")
     try:
+        bot.tree.clear_commands(guild=None)
+        await bot.tree.sync()
         synced = await bot.tree.sync()
         print(f"✅ {len(synced)} commandes synchronisées")
     except Exception as e:
