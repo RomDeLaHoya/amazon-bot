@@ -153,12 +153,16 @@ async def on_ready():
     init_db()
     print(f"✅ Bot connecté : {bot.user} ({bot.user.id})")
     try:
+        print("🔄 Nettoyage des anciennes commandes...")
         bot.tree.clear_commands(guild=None)
         await bot.tree.sync()
+        print("🔄 Resynchronisation...")
         synced = await bot.tree.sync()
         print(f"✅ {len(synced)} commandes synchronisées")
     except Exception as e:
         print(f"❌ Sync erreur : {e}")
+        import traceback
+        traceback.print_exc()
     await bot.change_presence(activity=discord.Activity(
         type=discord.ActivityType.watching, name="ton business Amazon 📦"
     ))
