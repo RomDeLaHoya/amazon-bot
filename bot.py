@@ -74,6 +74,23 @@ def init_db():
         categorie TEXT DEFAULT 'general', date_ajout TEXT
     )""")
 
+    # Migration : ajout colonnes manquantes si ancienne DB
+    try:
+        c.execute("ALTER TABLE marques ADD COLUMN categorie_id INTEGER")
+    except: pass
+    try:
+        c.execute("ALTER TABLE marques ADD COLUMN position INTEGER DEFAULT 0")
+    except: pass
+    try:
+        c.execute("ALTER TABLE categories ADD COLUMN message_id TEXT")
+    except: pass
+    try:
+        c.execute("ALTER TABLE categories ADD COLUMN channel_id TEXT")
+    except: pass
+    try:
+        c.execute("ALTER TABLE categories ADD COLUMN position INTEGER DEFAULT 0")
+    except: pass
+
     conn.commit()
     conn.close()
 
