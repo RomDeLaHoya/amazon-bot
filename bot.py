@@ -29,6 +29,17 @@ TITRES_CHANNEL = {
 #  DATABASE
 # ─────────────────────────────────────────
 def init_db():
+    # Supprime l ancienne DB si elle a une structure incompatible
+    import os
+    if os.path.exists(DB_PATH):
+        try:
+            conn_test = sqlite3.connect(DB_PATH)
+            conn_test.execute("SELECT categorie_id FROM marques LIMIT 1")
+            conn_test.close()
+        except:
+            conn_test.close()
+            os.remove(DB_PATH)
+            print("🔄 Ancienne base supprimée, recréation...")
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
